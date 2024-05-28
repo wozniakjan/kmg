@@ -1,0 +1,39 @@
+{
+  "title": "KEDA meets GatewayAPI",
+  "description": "...",
+  "details": {
+    "intro": {
+      "text": "intro.md"
+    },
+    "steps": [
+      {
+        "title": "Install GatewayAPI",
+        "text": "install-gatewayapi.md",
+        "verify": "install-gatewayapi-verify.sh"
+      },
+      {
+        "title": "Install KEDA",
+        "text": "install-keda.md",
+        "verify": "install-keda-verify.sh"
+      },
+      {
+        "title": "Install KEDA http-add-on",
+        "text": "install-keda-http-add-on.md",
+        "verify": "install-keda-http-add-on-verify.sh"
+      },
+      {
+        "title": "Deploy App",
+        "text": "deploy-app.md",
+        "verify": "deploy-app-verify.sh"
+      },
+      {
+        "title": "Autoscale",
+        "text": "autoscale.md",
+        "verify": "autoscale-verify.sh"
+      }
+    ]
+  },
+  "backend": {
+    "imageid": "kubernetes-kubeadm-1node"
+  }
+}
