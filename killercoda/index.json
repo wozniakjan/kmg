@@ -17,11 +17,6 @@
         "verify": "install-keda-verify.sh"
       },
       {
-        "title": "Install KEDA http-add-on",
-        "text": "install-keda-http-add-on.md",
-        "verify": "install-keda-http-add-on-verify.sh"
-      },
-      {
         "title": "Deploy App",
         "text": "deploy-app.md",
         "verify": "deploy-app-verify.sh"

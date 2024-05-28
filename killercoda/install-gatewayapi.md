@@ -31,7 +31,8 @@ metadata:
 EOF
 ```{{exec}}
 
-Install **Envoy Gateway** as a GatewayAPI implementation of choice.
+Install **Envoy Gateway** as a GatewayAPI implementation of choice. We are going to be using the [nightly build](https://github.com/envoyproxy/gateway/releases/tag/latest)
+because at the time of writing this, a feature for [advanced filtering](https://github.com/envoyproxy/gateway/pull/3246) has not been released yet.
 ```plain
 helm install eg oci://docker.io/envoyproxy/gateway-helm --version v0.0.0-latest -n envoy-gateway-system --create-namespace
 ```{{exec}}
