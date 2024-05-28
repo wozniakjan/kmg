@@ -97,26 +97,6 @@ EOF
 
 Expose the application, both versions, loadbalancing 50% of the requests round-robin style
 
-GatewayAPI `ReferenceGrant`{{}} to allow referencing services and routes in a different `Namespace`{{}}
-```yaml
-cat << 'EOF' | kubectl apply -f -
-apiVersion: gateway.networking.k8s.io/v1beta1
-kind: ReferenceGrant
-metadata:
-  name: app
-  namespace: keda
-spec:
-  from:
-  - group: gateway.networking.k8s.io
-    kind: HTTPRoute
-    namespace: default
-  to:
-  - group: ""
-    kind: Service
-    name: keda-add-on-http-interceptor-proxy
-EOF
-```{{exec}}
-
 Then the `HTTPRoute`{{}} to configure Envoy Gateway to route requests with hostname `keda-meets-gw.com`{{}} to our application.
 ```yaml
 cat << 'EOF' | kubectl apply -f -
@@ -134,27 +114,14 @@ spec:
   rules:
   - backendRefs:
     - kind: Service
-      name: keda-add-on-http-interceptor-proxy 
-      namespace: keda
+      name: app-1
       port: 8080
       weight: 1
-      filters: 
-      - type: RequestHeaderModifier
-        requestHeaderModifier:
-          set:
-          - name: x-keda-http-addon
-            value: app-1
     - kind: Service
-      name: keda-add-on-http-interceptor-proxy 
+      name: app-2
       namespace: keda
       port: 8080
       weight: 1
-      filters: 
-      - type: RequestHeaderModifier
-        requestHeaderModifier:
-          set:
-          - name: x-keda-http-addon
-            value: app-2
     matches:
     - path:
         type: PathPrefix
