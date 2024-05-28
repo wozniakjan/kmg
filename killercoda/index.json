@@ -28,6 +28,12 @@
       }
     ]
   },
+  "assets": {
+    "host01": [
+      {"file": "curl_load.sh", "target": "/scripts", "chmod": "+x"},
+      {"file": "curl_batch.sh", "target": "/scripts", "chmod": "+x"}
+    ]
+  },
   "backend": {
     "imageid": "kubernetes-kubeadm-1node"
   }

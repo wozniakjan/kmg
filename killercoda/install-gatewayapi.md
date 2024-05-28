@@ -1,4 +1,3 @@
-
 Install **MetalLB** to allow GatewayAPI *external IP*. It actually won't be entirely public IP in a sense that you can reach
 it throug internet, just an IP that is exposed outside of the kubernetes cluster to the terminal of Killercoda. This is necessary
 for the successful GatewayAPI configuration.
