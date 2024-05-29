@@ -1,5 +1,10 @@
 As next steps, we will install [KEDA]() and [http-add-on]()
 
+metrics server as prerequisite
+```plain
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```{{exec}}
+
 Add KEDA charts to helm
 ```plain
 helm repo add kedacore https://kedacore.github.io/charts

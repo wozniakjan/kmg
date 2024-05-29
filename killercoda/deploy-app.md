@@ -119,7 +119,6 @@ spec:
       weight: 1
     - kind: Service
       name: app-2
-      namespace: keda
       port: 8080
       weight: 1
     matches:
