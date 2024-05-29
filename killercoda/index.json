@@ -26,13 +26,21 @@
         "text": "autoscale.md",
         "verify": "autoscale-verify.sh"
       }
-    ]
-  },
-  "assets": {
-    "host01": [
-      {"file": "curl_load.sh", "target": "/scripts", "chmod": "+x"},
-      {"file": "curl_batch.sh", "target": "/scripts", "chmod": "+x"}
-    ]
+    ],
+    "assets": {
+      "host01": [
+        {
+          "file": "curl_load.sh",
+          "target": "/scripts",
+          "chmod": "+x"
+        },
+        {
+          "file": "curl_batch.sh",
+          "target": "/scripts",
+          "chmod": "+x"
+        }
+      ]
+    }
   },
   "backend": {
     "imageid": "kubernetes-kubeadm-1node-4GB-rapid"
