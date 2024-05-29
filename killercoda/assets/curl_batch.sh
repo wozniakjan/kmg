@@ -29,11 +29,11 @@ convert_to_ms() {
 color() {
     elapsed_ms=$1
     if (( $(echo "$elapsed_ms > 100" | bc -l) )); then
-        color="\033[0;31m"  # Red for over 1 second
-    elif (( $(echo "$elapsed_ms >= 10" | bc -l) )); then
-        color="\033[0;33m"  # Orange for over 100 milliseconds
+        color="\033[0;31m"  # Red for over 100 milliseconds
+    elif (( $(echo "$elapsed_ms >= 20" | bc -l) )); then
+        color="\033[0;33m"  # Orange for over 20 milliseconds
     else
-        color="\033[0;32m"  # Green for 100 milliseconds or less
+        color="\033[0;32m"  # Green for under 20 milliseconds
     fi
     echo $color
 }

@@ -1,12 +1,12 @@
 Install **MetalLB** to allow GatewayAPI *external IP*. It actually won't be entirely public IP in a sense that you can reach
 it throug internet, just an IP that is exposed outside of the kubernetes cluster to the terminal of Killercoda. This is necessary
 for the successful GatewayAPI configuration.
-```plain
+```bash
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.5/config/manifests/metallb-native.yaml
 ```{{exec}}
 
 Wait for MetalLB controller to be ready
-```plain
+```bash
 kubectl wait --for=condition=Available --namespace metallb-system deployment/controller --timeout=5m
 ```{{exec}}
 
@@ -32,12 +32,12 @@ EOF
 
 Install **Envoy Gateway** as a GatewayAPI implementation of choice. We are going to be using the [nightly build](https://github.com/envoyproxy/gateway/releases/tag/latest)
 because at the time of writing this, a feature for [advanced filtering](https://github.com/envoyproxy/gateway/pull/3246) has not been released yet.
-```plain
+```bash
 helm install eg oci://docker.io/envoyproxy/gateway-helm --version v0.0.0-latest -n envoy-gateway-system --create-namespace
 ```{{exec}}
 
 Wait for `envoy-gateway` controller to be available
-```plain
+```bash
 kubectl wait --for=condition=Available --namespace envoy-gateway-system deployment/envoy-gateway --timeout=5m 
 ```{{exec}}
 

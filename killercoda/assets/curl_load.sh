@@ -4,5 +4,5 @@ set -euo pipefail
 
 clear
 /scripts/curl_batch.sh
-sleep 15
+read x
 watch --no-title -n 1 --color /scripts/curl_batch.sh
