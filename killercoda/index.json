@@ -30,6 +30,11 @@
     "assets": {
       "host01": [
         {
+          "file": "watch_app.sh",
+          "target": "/scripts",
+          "chmod": "+x"
+        },
+        {
           "file": "curl_load.sh",
           "target": "/scripts",
           "chmod": "+x"
