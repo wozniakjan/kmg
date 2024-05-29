@@ -3,9 +3,7 @@ As next steps, we will install [KEDA]() and [http-add-on]()
 metrics server as prerequisite
 ```bash
 helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server
-helm install metrics-server metrics-server/metrics-server \
-  --set args=--kubelet-insecure-tls
-kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+helm install metrics-server metrics-server/metrics-server --set args={--kubelet-insecure-tls} --namespace kube-system
 ```{{exec}}
 
 Add KEDA charts to helm, install KEDA and install http-add-on, slightly trimmed down so it all can fit in Killercoda cluster
@@ -28,3 +26,6 @@ kubectl wait --for=condition=Available --namespace keda deployment/keda-add-ons-
 ```{{exec}}
 
 TODO: describe KEDA a bit
+```bash
+kubectl get deployment -nkeda
+```{{exec}}

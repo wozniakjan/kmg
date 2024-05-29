@@ -116,10 +116,12 @@ spec:
         type: PathPrefix
         value: /
 EOF
+kubectl apply -f /configs/envoy.yaml
 ```{{exec}}
 
 Here is a visual diff of what has changed
 ```diff
+//TODO: this is bad, need to make it easier to observe
 15c15,16
 <       name: app-1
 ---

@@ -72,3 +72,8 @@ spec:
           from: All
 EOF
 ```{{exec}}
+
+We can take a look at the `Gateway`{{}}, it should get configured and reconciled by the Envoy Gateway instantly
+```bash
+kubectl get gateway -n envoy-gateway-system
+```{{exec}}

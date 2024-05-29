@@ -30,6 +30,10 @@
     "assets": {
       "host01": [
         {
+          "file": "envoy.yaml",
+          "target": "/configs/envoy.yaml"
+        },
+        {
           "file": "watch_app.sh",
           "target": "/scripts",
           "chmod": "+x"
