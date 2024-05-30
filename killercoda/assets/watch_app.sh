@@ -26,7 +26,7 @@ function colorize_pods() {
         }
     }
     END {
-        print green app1 reset " / " blue app2 reset; 
+        print "\n app revisions" green app1 reset " / " blue app2 reset; 
     }
     '
 }

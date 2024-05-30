@@ -128,24 +128,35 @@ spec:
 EOF
 ```{{exec}}
 
+There is a convenience `watch`{{}} script that enhances the `kubectl`{{}} output to make it easier to see
+running replicas of each application version.
+```bash
+/scripts/watch_app.sh
+```{{exec}}
+
+To stop the script, you can just hit
+```bash
+# ctrl+c
+```{{exec interrupt}}
+
 Let's try to access our app over HTTP on `/`{{}}.
 ```bash
 GATEWAY_IP=$(kubectl get gateway -n envoy-gateway-system -o json eg | jq --raw-output '.status.addresses[0].value')
 curl -v -H "host: keda-meets-gw.com" http://"$GATEWAY_IP"
 ```{{exec}}
 
-There are two scripts that will help us generate some load and visualize responses a bit better
+There are also two scripts that will help us generate some load and visualize responses a bit better
 For a single batch of 10 requests:
 ```bash
 /scripts/curl_batch.sh
 ```{{exec}}
 
-For running the requests in batches periodically
+For running the requests in batches periodically:
 ```bash
 /scripts/curl_load.sh
 ```{{exec}}
 
-and in order to stop the periodic script, you can just
+Here too, to stop the script, you can just hit
 ```bash
 # ctrl+c
 ```{{exec interrupt}}

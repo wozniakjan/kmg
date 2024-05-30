@@ -1,7 +1,5 @@
 Start autoscaling based on HTTP load using KEDA http-add-on.
 
-For best experience, you can open `tmux`{{exec}} or use the tabs on the top pane.
-
 `HTTPScaledObject`{{}} for application version `1`{{}}
 ```yaml
 cat << 'EOF' | kubectl apply -f -
