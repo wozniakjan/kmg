@@ -16,7 +16,7 @@ cat <<EOF | kubectl apply -f -
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: kubelb
+  name: killercoda
   namespace: metallb-system
 spec:
   addresses:
@@ -25,7 +25,7 @@ spec:
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
-  name: kubelb
+  name: killercoda
   namespace: metallb-system
 EOF
 ```{{exec}}
@@ -33,7 +33,7 @@ EOF
 Install **Envoy Gateway** as a GatewayAPI implementation of choice. We are going to be using the [nightly build](https://github.com/envoyproxy/gateway/releases/tag/latest)
 because at the time of writing this, a feature for [advanced filtering](https://github.com/envoyproxy/gateway/pull/3246) has not been released yet.
 ```bash
-helm install eg oci://docker.io/envoyproxy/gateway-helm --version v0.0.0-latest -n envoy-gateway-system --create-namespace
+helm install eg /configs/gateway-helm -n envoy-gateway-system --create-namespace
 ```{{exec}}
 
 Wait for `envoy-gateway` controller to be available

@@ -1,5 +1,7 @@
 Start autoscaling based on HTTP load using KEDA http-add-on.
 
+For best experience, you can open `tmux`{{exec}} or use the tabs on the top pane.
+
 `HTTPScaledObject`{{}} for application version `1`{{}}
 ```yaml
 cat << 'EOF' | kubectl apply -f -
@@ -21,8 +23,8 @@ spec:
     max: 10
   scalingMetric:
     requestRate:
-      targetValue: 1
-  scaledownPeriod: 1
+      targetValue: 2
+  scaledownPeriod: 5
 EOF
 ```{{exec}}
 
@@ -47,8 +49,8 @@ spec:
     max: 10
   scalingMetric:
     requestRate:
-      targetValue: 1
-  scaledownPeriod: 1
+      targetValue: 2
+  scaledownPeriod: 5
 EOF
 ```{{exec}}
 
@@ -159,3 +161,7 @@ You can stop the `curl_load.sh` by
 ```
 # ctrl+c
 ```{{exec interrupt}}
+
+```bash
+kubectl patch httproute app -n default --type=json -p='[{"op": "replace", "path": "/spec/rules/0/backendRefs/0/weight", "value": 9}]'
+```{{exec}}

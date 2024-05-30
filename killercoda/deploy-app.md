@@ -131,7 +131,7 @@ EOF
 Let's try to access our app over HTTP on `/`{{}}.
 ```bash
 GATEWAY_IP=$(kubectl get gateway -n envoy-gateway-system -o json eg | jq --raw-output '.status.addresses[0].value')
-curl -s -H "host: keda-meets-gw.com" http://"$GATEWAY_IP"
+curl -v -H "host: keda-meets-gw.com" http://"$GATEWAY_IP"
 ```{{exec}}
 
 There are two scripts that will help us generate some load and visualize responses a bit better

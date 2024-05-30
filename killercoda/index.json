@@ -30,8 +30,12 @@
     "assets": {
       "host01": [
         {
+          "file": "gateway-helm/**/*",
+          "target": "/configs"
+        },
+        {
           "file": "envoy.yaml",
-          "target": "/configs/envoy.yaml"
+          "target": "/configs"
         },
         {
           "file": "watch_app.sh",
