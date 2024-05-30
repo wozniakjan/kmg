@@ -7,7 +7,7 @@ function colorize_pods() {
     BEGIN {
         app1=0;
         app2=0;
-        green="\033[0;32m";
+        magenta="\033[1;35m";
         blue="\033[1;34m";
         reset="\033[0m";
     }
@@ -17,7 +17,7 @@ function colorize_pods() {
     NR>1 {
         if ($1 ~ /app-1/) {
             app1++;
-            print green $0 reset;
+            print magenta $0 reset;
         } else if ($1 ~ /app-2/) {
             app2++;
             print blue $0 reset;
@@ -26,7 +26,7 @@ function colorize_pods() {
         }
     }
     END {
-        print "\n app revisions" green app1 reset " / " blue app2 reset; 
+        print "\napp revisions: " magenta app1 reset " / " blue app2 reset; 
     }
     '
 }

@@ -38,6 +38,16 @@ color() {
     echo $color
 }
 
+color_app() {
+    app=$1
+    if [[ "$app" == "[1]" ]]; then
+        color="\033[1;35m"
+    else
+        color="\033[1;34m"
+    fi
+    echo $color
+}
+
 total_time=0
 count_1=0
 count_2=0
@@ -48,8 +58,9 @@ for ((i=1; i<=NUM_LOOPS; i++)); do
 
     elapsed_ms=$(convert_to_ms "$elapsed_time")
     color="$(color $elapsed_ms)"
+    color_app="$(color_app $curl_output)"
 
-    printf "%s ${color} %8sms\033[0m\n" "$curl_output" "$elapsed_ms"
+    printf "${color_app}%s ${color} %5sms\033[0m\n" "$curl_output" "$elapsed_ms"
     
     total_time=$(echo "$total_time + $elapsed_ms" | bc)
     if [[ "$curl_output" == *"[1]"* ]]; then
@@ -63,4 +74,4 @@ average_time=$(echo "$total_time / $NUM_LOOPS" | bc)
 
 color="$(color $average_time)"
 printf "\nAverage time: ${color}%sms\033[0m\n" "$average_time"
-printf "App versions: %s/%s\n" "$count_1" "$count_2"
+printf "App versions: \033[1;35m%s\033[0m / \033[1;34m%s\033[0m\n" "$count_1" "$count_2"
