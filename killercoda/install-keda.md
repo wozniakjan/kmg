@@ -13,10 +13,19 @@ kubectl wait --for=condition=Available --namespace kube-system deployment/metric
 There are convenience commands baked into `kubectl`{{}} for looking at these metrics for `Nodes`{{}} as well as `Pods`{{}}
 ```bash
 kubectl top nodes
+```{{exec}}
+```bash
 kubectl top pods -n kube-system
 ```{{exec}}
 
 But it could be handy to know how to get the raw metrics too with `kubectl get --raw`{{}}, we will use this later to explore KEDA and http-add-on metrics. There are two registered metrics at the moment in `kube-api`{{}}.
+
+There is only one metrics related API group registered at the moment, this one is served by `kube-system/metrics-server`{{}} we just deployed
+```bash
+kubectl get apiservices.apiregistration.k8s.io | grep metrics
+```{{exec}}
+
+It contains `Pod` and `Node` metrics
 ```bash
 kubectl api-resources | grep metrics
 ```{{exec}}
@@ -62,4 +71,9 @@ kubectl get deployment --namespace keda
 This is the `interceptor`{{}} cluster local `Service`{{}} our applications may use for autoscaling based on traffic load.
 ```bash
 kubectl get service --namespace keda keda-add-ons-http-interceptor-proxy
-```
+```{{exec}}
+
+Now when we look at registered API groups, there is additional `v1beta1.external.metrics.k8s.io`{{}} group served by KEDA `keda/keda-operator-metrics-apiserver`{{}}
+```bash
+kubectl get apiservices.apiregistration.k8s.io | grep metrics
+```{{exec}}
