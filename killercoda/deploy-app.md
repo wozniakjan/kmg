@@ -1,6 +1,7 @@
-TODO: link to source code
+### Step 1: Deploy Application version 1
 
-Deploy our sample application, first version `1`{{}}
+Now we are going to create some workload. As a foundation, we will use this embarrasingly trivial [HTTP server](https://github.com/wozniakjan/kmg/tree/main/app/main.go).
+We will `Deployment`{{}} with a name `app-1`{{}}.
 ```yaml
 cat << 'EOF' | kubectl apply -f -
 apiVersion: apps/v1
@@ -29,7 +30,7 @@ spec:
 EOF
 ```{{exec}}
 
-Expose as simple `Service`{{}}
+Next we will expose it as simple `Service`{{}} called also `app-1`{{}}
 ```yaml
 cat << 'EOF' | kubectl apply -f -
 apiVersion: v1
@@ -47,7 +48,9 @@ spec:
 EOF
 ```{{exec}}
 
-Same with version `2`{{}} of the application
+### Step 2: Deploy Application version 2
+
+We are going to deploy the same application as a different version, and call it `app-2`{{}}
 ```yaml
 cat << 'EOF' | kubectl apply -f -
 apiVersion: apps/v1
@@ -77,7 +80,7 @@ spec:
 EOF
 ```{{exec}}
 
-`Service`{{}}
+Also exposed with a `Service`{{}} called `app-2`{{}}
 ```yaml
 cat << 'EOF' | kubectl apply -f -
 apiVersion: v1
@@ -95,9 +98,10 @@ spec:
 EOF
 ```{{exec}}
 
-Expose the application, both versions, loadbalancing 50% of the requests round-robin style
-
-Then the `HTTPRoute`{{}} to configure Envoy Gateway to route requests with hostname `keda-meets-gw.com`{{}} to our application.
+### Step 3: Create `HTTPRoute`
+To expose "externally" both versions `app-1`{{}} and `app-2`{{}} as a single application, we are going to use `HTTPRoute`{{}}. The traffic betwen the versions will be loadbalanced by the
+Envoy Gateway and requests will be split 50% of round-robin style. The hostname for our application is `keda-meets-gw.com`{{}} but there is no DNS record attached to the app, so we will
+just pretend everything is fine with `host: keda-meets-gw.com`{{}} header for our HTTP requests but hit the Gateway IP address instead.
 ```yaml
 cat << 'EOF' | kubectl apply -f -
 apiVersion: gateway.networking.k8s.io/v1
@@ -145,18 +149,18 @@ GATEWAY_IP=$(kubectl get gateway -n envoy-gateway-system -o json eg | jq --raw-o
 curl -v -H "host: keda-meets-gw.com" http://"$GATEWAY_IP"
 ```{{exec}}
 
-There are also two scripts that will help us generate some load and visualize responses a bit better
-For a single batch of 10 requests:
+There are also two scripts that will help us generate some load and visualize responses a bit nicer. 
+For a single batch of 10 requests
 ```bash
 /scripts/curl_batch.sh
 ```{{exec}}
 
-For running the requests in batches periodically:
+For running the requests in batches periodically
 ```bash
 /scripts/curl_load.sh
 ```{{exec}}
 
-Here too, to stop the script, you can just hit
+And here too, to stop the script, you can just hit
 ```bash
 # ctrl+c
 ```{{exec interrupt}}
