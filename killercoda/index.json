@@ -1,6 +1,6 @@
 {
   "title": "KEDA meets GatewayAPI",
-  "description": "...",
+  "description": "This scenario demonstrates how to use KEDA with GatewayAPI to autoscale a workload based on HTTP traffic. For more info, check out\nhttps://github.com/wozniakjan/kmg",
   "details": {
     "intro": {
       "text": "intro.md"
