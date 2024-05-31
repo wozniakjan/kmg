@@ -100,7 +100,7 @@ EOF
 
 ### Step 3: Create `HTTPRoute`
 To expose "externally" both versions `app-1`{{}} and `app-2`{{}} as a single application, we are going to use `HTTPRoute`{{}}. The traffic betwen the versions will be loadbalanced by the
-Envoy Gateway and requests will be split 50% of round-robin style. The hostname for our application is `keda-meets-gw.com`{{}} but there is no DNS record attached to the app, so we will
+Envoy Gateway and requests will be split 50% round-robin style. The hostname for our application is `keda-meets-gw.com`{{}} but there is no DNS record attached to the app, so we will
 just pretend everything is fine with `host: keda-meets-gw.com`{{}} header for our HTTP requests but hit the Gateway IP address instead.
 ```yaml
 cat << 'EOF' | kubectl apply -f -

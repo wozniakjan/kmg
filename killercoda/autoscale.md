@@ -1,7 +1,5 @@
 ### Step 1: Configure `HTTPScaledObjects` for Application Versions
-To start autoscaling based on HTTP load using KEDA http-add-on, there are few steps you as a application developer need to take.
-
-`HTTPScaledObject`{{}} for application version `app-1`{{}} tells  KEDA to start autoscaling this particular deployment of our application, so as soon as this object is created in `kube-api`{{}}, KEDA will scale down the pods to 0.
+To start autoscaling based on HTTP load using KEDA http-add-on, there are few steps you as a application developer need to take. One is to create `HTTPScaledObject`{{}} for application version `app-1`{{}}. This tells KEDA to start autoscaling this particular deployment of our application, so as soon as this object is created in `kube-api`{{}}, KEDA will scale down the pods to 0.
 ```yaml
 cat << 'EOF' | kubectl apply -f -
 kind: HTTPScaledObject
@@ -22,7 +20,7 @@ spec:
     max: 10
   scalingMetric:
     requestRate:
-      targetValue: 2
+      targetValue: 1
   scaledownPeriod: 5
 EOF
 ```{{exec}}
@@ -48,9 +46,15 @@ spec:
     max: 10
   scalingMetric:
     requestRate:
-      targetValue: 2
+      targetValue: 1
   scaledownPeriod: 5
 EOF
+```{{exec}}
+
+For this demo purposes, we are going to make the [scale down stabilization window](https://keda.sh/docs/2.12/concepts/scaling-deployments/#advanced) a bit more aggressive so we can observe both scale up and scale down
+```bash
+kubectl patch scaledobject app-1 -n default --type=merge -p='{"spec":{"advanced":{"horizontalPodAutoscalerConfig":{"behavior":{"scaleDown":{"stabilizationWindowSeconds": 5}}}}}}'
+kubectl patch scaledobject app-2 -n default --type=merge -p='{"spec":{"advanced":{"horizontalPodAutoscalerConfig":{"behavior":{"scaleDown":{"stabilizationWindowSeconds": 5}}}}}}'
 ```{{exec}}
 
 ### Step 2: Re-route Application Traffic to `interceptor`{{}}
@@ -135,6 +139,11 @@ You can stop the `curl_load.sh` by
 ```
 # ctrl+c
 ```{{exec interrupt}}
+
+There is this `kubectl`{{}} command to observe raw metrics from the `interceptor`{{}}
+```bash
+watch --no-title -n 1 --color 'kubectl get --raw "/api/v1/namespaces/keda/services/keda-add-ons-http-interceptor-admin:9090/proxy/queue" | jq "."'
+```{{exec}}
 
 We can play around with the traffic shaping, instead of 50-50 split, we can route 90% to `app-1`{{}} and only 10% to `app-2`{{}}
 ```bash
