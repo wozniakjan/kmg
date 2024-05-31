@@ -1,4 +1,7 @@
-TODO: intro for the scenario
+Welcome to our autoscaling scenario, where you will have the chance to explore and experiment with several tools and technologies in a small Kubernetes environment. In this scenario, you will work with MetalLB, Envoy Gateway, and KEDA along with its HTTP add-on. These tools will help you understand how to manage network traffic and autoscale applications based on traffic.
 
-For best experience, you may want to open `tmux`{{exec}} or use the tabs on the top pane
-to be able to observe state of the cluster while performing some commands.
+To help you navigate through the different tasks, you can use [`tmux`{{}}](https://github.com/tmux/tmux/wiki) or Killercoda tabs to keep your workflow organized and efficient.
+
+```
+tmux
+```{{exec}}
