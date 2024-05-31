@@ -39,7 +39,10 @@ color() {
 }
 
 color_app() {
-    app=$1
+    if [[ "$#" -eq 0 ]]; then
+        return
+    fi
+    app="${1}"
     if [[ "$app" == "[1]" ]]; then
         color="\033[1;35m"
     else
