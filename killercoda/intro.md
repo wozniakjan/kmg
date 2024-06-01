@@ -5,3 +5,5 @@ To help you navigate through the different tasks, you can use [`tmux`{{}}](https
 ```
 tmux
 ```{{exec}}
+
+For more: https://github.com/wozniakjan/kmg
