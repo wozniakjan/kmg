@@ -36,8 +36,8 @@ EOF
 
 ### Step 2: Install and Configure Envoy Gateway
 
-Now we are goint to install [**Envoy Gateway**](https://gateway.envoyproxy.io/) as our GatewayAPI implementation of choice. The GatewayAPI is just a specification + CRDs,
-and there are plenty of [implementations](https://gateway.envoyproxy.io/), usually supporting a subset of the specification. Envoy Gateway has graduated to GA and continues to
+Now we are going to install [**Envoy Gateway**](https://gateway.envoyproxy.io/) as our GatewayAPI implementation of choice. The GatewayAPI is just a specification + CRDs,
+and there are plenty of [implementations](https://gateway-api.sigs.k8s.io/implementations/), usually supporting a subset of the specification. Envoy Gateway has graduated to GA and continues to
 be actively developed. In this scenario, we are going to be using the [nightly build](https://github.com/envoyproxy/gateway/releases/tag/latest) because at the time of writing this,
 a feature for [advanced backend filtering](https://github.com/envoyproxy/gateway/pull/3246) has not been released yet in a official release.
 ```bash
