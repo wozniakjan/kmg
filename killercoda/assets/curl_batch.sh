@@ -43,10 +43,10 @@ color_app() {
         return
     fi
     app="${1}"
-    if [[ "$app" == "[1]" ]]; then
-        color="\033[1;35m"
-    else
+    if [[ "$app" == "[blue]" ]]; then
         color="\033[1;34m"
+    else
+        color="\033[1;35m"
     fi
     echo $color
 }
@@ -66,9 +66,9 @@ for ((i=1; i<=NUM_LOOPS; i++)); do
     printf "${color_app}%s ${color} %5sms\033[0m\n" "$curl_output" "$elapsed_ms"
     
     total_time=$(echo "$total_time + $elapsed_ms" | bc)
-    if [[ "$curl_output" == *"[1]"* ]]; then
+    if [[ "$curl_output" == *"[blue]"* ]]; then
         count_1=$((count_1 + 1))
-    elif [[ "$curl_output" == *"[2]"* ]]; then
+    elif [[ "$curl_output" == *"[prpl]"* ]]; then
         count_2=$((count_2 + 1))
     fi
 done

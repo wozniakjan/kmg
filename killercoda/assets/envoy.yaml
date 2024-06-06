@@ -27,18 +27,18 @@ data:
                       prefix: "/"
                       headers:
                       - name: "x-keda-http-addon"
-                        exact_match: "app-1"
+                        exact_match: "blue"
                     route:
                       cluster: interceptor_proxy
-                      host_rewrite_literal: app-1
+                      host_rewrite_literal: blue
                   - match:
                       prefix: "/"
                       headers:
                       - name: "x-keda-http-addon"
-                        exact_match: "app-2"
+                        exact_match: "prpl"
                     route:
                       cluster: interceptor_proxy
-                      host_rewrite_literal: app-2
+                      host_rewrite_literal: prpl
               http_filters:
               - name: envoy.filters.http.router
                 typed_config:

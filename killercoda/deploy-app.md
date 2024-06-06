@@ -1,21 +1,21 @@
-### Step 1: Deploy Application version 1
+### Step 1: Deploy `blue`{{}} App
 
 Now we are going to create some workload. As a foundation, we will use this embarrasingly trivial [HTTP server](https://github.com/wozniakjan/kmg/tree/main/app/main.go).
-We will `Deployment`{{}} with a name `app-1`{{}}.
+We will `Deployment`{{}} with a name `blue`{{}}.
 ```yaml
 cat << 'EOF' | kubectl apply -f -
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-1
+  name: blue
 spec:
   selector:
     matchLabels:
-      app: app-1
+      app: blue
   template:
     metadata:
       labels:
-        app: app-1
+        app: blue
     spec:
       containers:
         - name: mycontainer
@@ -26,45 +26,45 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: VERSION
-              value: "1"
+              value: blue
 EOF
 ```{{exec}}
 
-Next we will expose it as simple `Service`{{}} called also `app-1`{{}}
+Next we will expose it as simple `Service`{{}} called also `blue`{{}}
 ```yaml
 cat << 'EOF' | kubectl apply -f -
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-1
+  name: blue
 spec:
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
-    app: app-1
+    app: blue
   type: ClusterIP
 EOF
 ```{{exec}}
 
-### Step 2: Deploy Application version 2
+### Step 2: Deploy `prpl`{{}} App 
 
-We are going to deploy the same application as a different version, and call it `app-2`{{}}
+We are going to deploy the same application as a different version, and call it `prpl`{{}}
 ```yaml
 cat << 'EOF' | kubectl apply -f -
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-2
+  name: prpl
 spec:
   selector:
     matchLabels:
-      app: app-2
+      app: prpl
   template:
     metadata:
       labels:
-        app: app-2
+        app: prpl
     spec:
       containers:
         - name: mycontainer
@@ -76,30 +76,30 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: VERSION
-              value: "2"
+              value: prpl
 EOF
 ```{{exec}}
 
-Also exposed with a `Service`{{}} called `app-2`{{}}
+Also exposed with a `Service`{{}} called `prpl`{{}}
 ```yaml
 cat << 'EOF' | kubectl apply -f -
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-2
+  name: prpl
 spec:
   ports:
   - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
-    app: app-2
+    app: prpl
   type: ClusterIP
 EOF
 ```{{exec}}
 
 ### Step 3: Create `HTTPRoute`
-To expose "externally" both versions `app-1`{{}} and `app-2`{{}} as a single application, we are going to use `HTTPRoute`{{}}. The traffic betwen the versions will be loadbalanced by the
+To expose "externally" both versions `blue`{{}} and `prpl`{{}} as a single application, we are going to use `HTTPRoute`{{}}. The traffic betwen the versions will be loadbalanced by the
 Envoy Gateway and requests will be split 50% round-robin style. The hostname for our application is `keda-meets-gw.com`{{}} but there is no DNS record attached to the app, so we will
 just pretend everything is fine with `host: keda-meets-gw.com`{{}} header for our HTTP requests but hit the Gateway IP address instead.
 ```yaml
@@ -118,11 +118,11 @@ spec:
   rules:
   - backendRefs:
     - kind: Service
-      name: app-1
+      name: blue
       port: 8080
       weight: 1
     - kind: Service
-      name: app-2
+      name: prpl
       port: 8080
       weight: 1
     matches:

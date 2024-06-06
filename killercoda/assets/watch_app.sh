@@ -15,12 +15,12 @@ function colorize_pods() {
         print $0;
     }
     NR>1 {
-        if ($1 ~ /app-1/) {
+        if ($1 ~ /blue/) {
             app1++;
-            print magenta $0 reset;
-        } else if ($1 ~ /app-2/) {
-            app2++;
             print blue $0 reset;
+        } else if ($1 ~ /prpl/) {
+            app2++;
+            print magenta $0 reset;
         } else {
             print $0;
         }
@@ -32,4 +32,10 @@ function colorize_pods() {
 }
 export -f colorize_pods
 
-watch --no-title -n 1 --color -x bash -c "colorize_pods; echo ''; kubectl get --raw '/api/v1/namespaces/keda/services/keda-add-ons-http-interceptor-admin:9090/proxy/queue' | jq '.'"
+function metrics_from_interceptor() {
+    kubectl get --raw '/api/v1/namespaces/keda/services/keda-add-ons-http-interceptor-admin:9090/proxy/queue' | \
+        jq 'to_entries | map({key, value: ((.value.RPS | tostring) + " RPS")}) | from_entries'
+}
+export -f metrics_from_interceptor
+
+watch --no-title -n 1 --color -x bash -c "colorize_pods; echo ''; metrics_from_interceptor"
