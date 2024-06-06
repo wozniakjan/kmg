@@ -32,4 +32,4 @@ function colorize_pods() {
 }
 export -f colorize_pods
 
-watch --no-title -n 1 --color -x bash -c "colorize_pods"
+watch --no-title -n 1 --color -x bash -c "colorize_pods; echo ''; kubectl get --raw '/api/v1/namespaces/keda/services/keda-add-ons-http-interceptor-admin:9090/proxy/queue' | jq '.'"
