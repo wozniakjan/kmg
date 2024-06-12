@@ -26,7 +26,7 @@ function colorize_pods() {
         }
     }
     END {
-        print "\napp revisions: " magenta app1 reset " / " blue app2 reset; 
+        print "\napp revisions: " magenta app2 reset " / " blue app1 reset; 
     }
     '
 }
